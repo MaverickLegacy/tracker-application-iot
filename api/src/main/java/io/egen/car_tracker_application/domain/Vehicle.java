@@ -2,12 +2,14 @@ package io.egen.car_tracker_application.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
+@Table(name = "Vehicles")
 public class Vehicle {
+
     @Id
     private String vin;
 
@@ -22,6 +24,9 @@ public class Vehicle {
     private Integer maxfuelvolume;
 
     private String lastServiceDate;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehicle")
+    private Set<VehicleReadings> readings;
 
     public Vehicle() {
     }

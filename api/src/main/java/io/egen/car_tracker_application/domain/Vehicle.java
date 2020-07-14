@@ -11,18 +11,21 @@ import java.util.Set;
 public class Vehicle {
 
     @Id
+    @Column(name = "vin")
     private String vin;
 
+    @Column(name = "make")
     private String make;
-
+    @Column(name = "model")
     private String model;
-
+    @Column(name = "year")
     private Integer year;
 
+    @Column(name = "redlinerpm")
     private Integer redlinerpm;
-
+    @Column(name = "maxfuelvolume")
     private Integer maxfuelvolume;
-
+    @Column(name = "lastservicedate")
     private String lastServiceDate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehicle")

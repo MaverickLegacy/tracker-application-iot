@@ -1,5 +1,7 @@
 package io.egen.car_tracker_application.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,8 +11,8 @@ public class VehicleReadings {
         @EmbeddedId
         private ReadingId readingId;
 
-        @ManyToOne
-        @JoinColumn(name="vin", nullable = false)
+        @ManyToOne(optional = false)
+        @JoinColumn(nullable = false, referencedColumnName="vin" )
         Vehicle vehicle;
         @Column(name= "latitude")
         private Float latitude;
@@ -19,25 +21,25 @@ public class VehicleReadings {
 
         @Column(name = "fuelvolume")
         private Float fuelVolume;
-        @Column(name = "checkEnginelighton")
+        @Column(name = "checkenginelighton")
         private Boolean checkEngineLightOn;
         @Column(name = "enginecoolantlow")
         private Boolean engineCoolantLow;
         @Column(name = "enginerpm")
         private Integer engineRpm;
 
-        @OneToOne(cascade = CascadeType.ALL, mappedBy = "tires")
+        @OneToOne(cascade = CascadeType.ALL)
         private Tires tires;
 
         public VehicleReadings() {
         }
 
         public String getVin() {
-            return vin;
+            return vehicle.getVin();
         }
 
         public void setVin(String vin) {
-            this.vin = vin;
+            this.vehicle.setVin(vin);
         }
 
         public Float getLatitude() {
@@ -57,11 +59,11 @@ public class VehicleReadings {
         }
 
         public String getTimestamp() {
-            return timestamp;
+            return this.readingId.timestamp;
         }
 
         public void setTimestamp(String timestamp) {
-            this.timestamp = timestamp;
+            this.readingId.timestamp = timestamp;
         }
 
         public Float getFuelVolume() {
@@ -96,7 +98,22 @@ public class VehicleReadings {
             this.engineRpm = engineRpm;
         }
 
-
+        public VehicleReadings(ReadingId readingId,
+                               @JsonProperty("latitude") Float latitude,
+                               @JsonProperty("longitude") Float longitude,
+                               @JsonProperty("fuelVolume") Float fuelVolume,
+                               @JsonProperty("checkEngineLightOn") Boolean checkEngineLightOn,
+                               @JsonProperty("engineCoolantLow") Boolean engineCoolantLow,
+                               @JsonProperty("engineRpm") Integer enginerpm){
+            this.readingId = readingId;
+            this.latitude = latitude;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.checkEngineLightOn = checkEngineLightOn;
+            this.engineCoolantLow = engineCoolantLow;
+            this.engineRpm = enginerpm;
+            this.fuelVolume = fuelVolume;
+        }
 }
 
 

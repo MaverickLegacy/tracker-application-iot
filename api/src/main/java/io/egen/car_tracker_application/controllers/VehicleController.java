@@ -2,13 +2,12 @@ package io.egen.car_tracker_application.controllers;
 
 import com.sun.istack.NotNull;
 import io.egen.car_tracker_application.domain.Vehicle;
+import io.egen.car_tracker_application.domain.VehicleReading;
 import io.egen.car_tracker_application.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 @RequestMapping
 @RestController
 public class VehicleController {
@@ -22,10 +21,10 @@ public class VehicleController {
 
     @PutMapping("/vehicles")
     public void addVehicles(@RequestBody @NotNull Vehicle[] vehicles) {
-
+        /*
         for(Vehicle vehicle: vehicles){
             System.out.println(vehicle);
-        }
+        }*/
         this.vehicleService.addVehicles(vehicles);
     }
 
@@ -33,4 +32,17 @@ public class VehicleController {
     public void addVehicle(@RequestBody @NotNull Vehicle vehicle) {
         this.vehicleService.addVehicle(vehicle);
     }
+
+
+    @GetMapping("/getVehicles")
+    public Iterable<Vehicle> getAllVehical(){
+       return this.vehicleService.getVehicles();
+    }
+
+    @PostMapping("/readings")
+    public void addReading(@RequestBody @NotNull VehicleReading vehicleReading)
+    {
+        this.vehicleService.addVehicleReading(vehicleReading);
+    }
+
 }

@@ -3,16 +3,10 @@ package io.egen.car_tracker_application.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.Embeddable;
 
-@Entity
+@Embeddable
 public class Tires {
-
-    @EmbeddedId
-    private ReadingId readingId;
-
     @Column(name = "frontleft")
     private Integer frontLeft;
     @Column(name = "frontright")
@@ -25,19 +19,16 @@ public class Tires {
     public Tires() {
     }
 
-    public Tires(ReadingId readingId,
-                 @JsonProperty("frontLeft") Integer frontLeft,
+    public Tires(@JsonProperty("frontLeft") Integer frontLeft,
                  @JsonProperty("frontRight") Integer frontright,
                  @JsonProperty("rearLeft")Integer rearleft,
-                 @JsonProperty("frontRight")Integer rearRight) {
-        this.readingId = readingId;
+                 @JsonProperty("rearRight")Integer rearRight) {
+        //this.readingId = readingId;
         this.frontLeft = frontLeft;
         this.frontRight = frontright;
         this.rearLeft = rearleft;
         this.rearRight= rearRight;
     }
-    @OneToOne
-    private VehicleReadings vehicleReading;
 
     public Integer getFrontLeft() {
         return frontLeft;

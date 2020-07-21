@@ -16,7 +16,6 @@ public class VehicleReading {
         @EmbeddedId
         private ReadingId readingId;
 
-
         @ManyToOne( targetEntity = Vehicle.class, fetch = FetchType.EAGER,optional = false)
         @JoinColumn(name ="vehicleId", referencedColumnName = "vin",  insertable = false, updatable = false)
         @MapsId(value = "vehicleId")

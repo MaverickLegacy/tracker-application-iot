@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Embeddable
 @Getter
@@ -22,10 +23,10 @@ public class ReadingId implements Serializable {
     String vehicleId;
 
     @Column(name = "timestamp")
-    String timestamp;
+    LocalDateTime timestamp;
 
     ReadingId( @JsonProperty("vin") String vehicleId, @JsonProperty("timestamp") String timestamp){
         this.vehicleId = vehicleId;
-        this.timestamp = timestamp;
+        this.timestamp = LocalDateTime.parse(timestamp.substring(0, timestamp.length()-1));
     }
 }

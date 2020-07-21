@@ -23,6 +23,7 @@ public class Alert {
 
     @ManyToOne(targetEntity = Vehicle.class, fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name ="vehicleId", referencedColumnName = "vin",  insertable = false, updatable = false)
+    //@JoinColumn(name ="timestamp", referencedColumnName = "timestamp",  insertable = false, updatable = false)
     @MapsId(value = "vehicleId")
     private Vehicle vehicle;
 }

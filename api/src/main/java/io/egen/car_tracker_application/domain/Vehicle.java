@@ -35,15 +35,4 @@ public class Vehicle {
     @Column(name = "lastServiceDate")
     private String lastServiceDate;
 
-    /*
-    @OneToMany(targetEntity = VehicleReading.class, cascade = CascadeType.ALL, mappedBy = "vehicle")
-    private Set<VehicleReading> vehicleReadings = new HashSet<>();
-
-    @OneToMany(targetEntity = Alert.class, cascade = CascadeType.ALL, mappedBy = "vehicle")
-    private Set<Alert> allAlerts = new HashSet<>();
-
-    public Set<Alert> getAllAlerts(){
-        return this.allAlerts;
-    }
-    */
 }

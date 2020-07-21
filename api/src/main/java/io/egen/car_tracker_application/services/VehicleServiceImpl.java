@@ -4,12 +4,14 @@ import io.egen.car_tracker_application.domain.Alert;
 import io.egen.car_tracker_application.domain.AlertType;
 import io.egen.car_tracker_application.domain.Vehicle;
 import io.egen.car_tracker_application.domain.VehicleReading;
+import io.egen.car_tracker_application.dto.ReadingsEntityToDto;
 import io.egen.car_tracker_application.repositories.AlertsRepository;
 import io.egen.car_tracker_application.repositories.VehicleReadingRepository;
 import io.egen.car_tracker_application.repositories.VehiclesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service("vehicleServiceImpl")
@@ -61,7 +63,6 @@ public class VehicleServiceImpl implements VehicleService {
                 alert.setVehicle(vehicle.get());
                 this.alertsRepository.save(alert);
             }
-            //vehicle.get().getVehicleReadings().add(vehicleReading);
             this.vehicleReadingRepository.save(vehicleReading);
         }
     }
@@ -98,8 +99,21 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Iterable<Float> getReadings() {
-//        return this.vehicleReadingRepository.findByMyQuery();
-        return this.vehicleReadingRepository.findAllSomeMethod();
+    public Iterable<ReadingsEntityToDto> getReadings() {
+
+        Iterable<VehicleReading> allVehicleReadings = this.vehicleReadingRepository.findAll();
+        ArrayList<ReadingsEntityToDto> dtos = new ArrayList<ReadingsEntityToDto>();
+        for(VehicleReading v: allVehicleReadings){
+            ReadingsEntityToDto dto = new ReadingsEntityToDto();
+            dto.setTimestamp(v.getReadingId().getTimestamp());
+            dto.setVehicleId(v.getReadingId().getVehicleId());
+            dto.setLongitude(v.getLongitude());
+            dto.setLatitude(v.getLatitude());
+            dto.setEngineRpm(v.getEngineRpm());
+            dto.setFuelVolume(v.getFuelVolume());
+            dtos.add(dto);
+        }
+
+        return dtos;
     }
 }

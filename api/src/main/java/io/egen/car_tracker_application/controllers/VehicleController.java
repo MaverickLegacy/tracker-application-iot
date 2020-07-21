@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import io.egen.car_tracker_application.domain.Alert;
 import io.egen.car_tracker_application.domain.Vehicle;
 import io.egen.car_tracker_application.domain.VehicleReading;
+import io.egen.car_tracker_application.dto.ReadingsEntityToDto;
 import io.egen.car_tracker_application.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,19 +47,21 @@ public class VehicleController {
         this.vehicleService.addVehicleReading(vehicleReading);
     }
 
-    /*
+/*
+
     @GetMapping("/alerts/{id}")
-    public List<Alert> getAllHistoricalAlerts(@RequestParam("id") String vin){
+    public List<Alert> getAllHistoricalAlerts(@PathVariable("id") String vin){
         return this.vehicleService.findAllHistoricalAlerts(vin);
     }
-    */
-    @GetMapping("/alerts/")
+
+*/
+    @GetMapping("/allalerts/")
     public Iterable<Alert> getAlerts(){
         return this.vehicleService.getAlerts();
     }
 
     @GetMapping("/givereadings")
-    public Iterable<Float> getReadings(){
+    public Iterable<ReadingsEntityToDto> getReadings(){
         return vehicleService.getReadings();
     }
 }

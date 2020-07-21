@@ -1,6 +1,7 @@
 package io.egen.car_tracker_application.controllers;
 
 import com.sun.istack.NotNull;
+import io.egen.car_tracker_application.domain.Alert;
 import io.egen.car_tracker_application.domain.Vehicle;
 import io.egen.car_tracker_application.domain.VehicleReading;
 import io.egen.car_tracker_application.services.VehicleService;
@@ -35,7 +36,7 @@ public class VehicleController {
 
 
     @GetMapping("/getVehicles")
-    public Iterable<Vehicle> getAllVehical(){
+    public Iterable<Vehicle> getAllVehicles(){
        return this.vehicleService.getVehicles();
     }
 
@@ -45,4 +46,19 @@ public class VehicleController {
         this.vehicleService.addVehicleReading(vehicleReading);
     }
 
+    /*
+    @GetMapping("/alerts/{id}")
+    public List<Alert> getAllHistoricalAlerts(@RequestParam("id") String vin){
+        return this.vehicleService.findAllHistoricalAlerts(vin);
+    }
+    */
+    @GetMapping("/alerts/")
+    public Iterable<Alert> getAlerts(){
+        return this.vehicleService.getAlerts();
+    }
+
+    @GetMapping("/givereadings")
+    public Iterable<Float> getReadings(){
+        return vehicleService.getReadings();
+    }
 }

@@ -5,5 +5,5 @@ import io.egen.car_tracker_application.domain.ReadingId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AlertsRepository extends JpaRepository<Alert, ReadingId> {
-  //public Optional<Alert> getAlertsById_VehicleId(String vehicleId);
+  public Iterable<Alert> findAlertById_VehicleId(String vehicleId);
 }

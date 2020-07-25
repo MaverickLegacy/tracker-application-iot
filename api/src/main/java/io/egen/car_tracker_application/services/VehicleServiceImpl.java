@@ -4,6 +4,8 @@ import io.egen.car_tracker_application.domain.Alert;
 import io.egen.car_tracker_application.domain.AlertType;
 import io.egen.car_tracker_application.domain.Vehicle;
 import io.egen.car_tracker_application.domain.VehicleReading;
+import io.egen.car_tracker_application.dto.AlertsDto;
+import io.egen.car_tracker_application.dto.GeolocationDto;
 import io.egen.car_tracker_application.dto.ReadingsEntityToDto;
 import io.egen.car_tracker_application.repositories.AlertsRepository;
 import io.egen.car_tracker_application.repositories.VehicleReadingRepository;
@@ -11,6 +13,7 @@ import io.egen.car_tracker_application.repositories.VehiclesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -114,6 +117,35 @@ public class VehicleServiceImpl implements VehicleService {
             dtos.add(dto);
         }
 
+        return dtos;
+    }
+
+    @Override
+    public Iterable<AlertsDto> getAlertsByVehicleId(String vin) {
+        ArrayList<AlertsDto> dtos = new ArrayList<>();
+        for(Alert a: this.alertsRepository.findAlertById_VehicleId(vin))
+        {
+            AlertsDto al = new AlertsDto();
+            al.setVehicleId(a.getId().getVehicleId());
+            al.setTimestamp(a.getId().getTimestamp());
+            al.setType(a.getType());
+            dtos.add(al);
+        }
+        return dtos;
+    }
+
+    @Override
+    public Iterable<GeolocationDto> getLocationByVehicleIdAndTimestamp(String vehicleId) {
+        ArrayList<GeolocationDto> dtos = new ArrayList<>();
+        LocalDateTime l1 = LocalDateTime.parse("2017-05-25T17:45:25.268");
+        LocalDateTime l2= l1.minusMinutes(30);
+        Iterable<VehicleReading> readings = this.vehicleReadingRepository.getVehicleReadingsByReadingId_VehicleIdAndReadingId_TimestampBetween(vehicleId, l1, l2);
+        for(VehicleReading r: readings){
+            GeolocationDto loc = new GeolocationDto();
+            loc.setLatitude(r.getLatitude());
+            loc.setLongitude(r.getLongitude());
+            dtos.add(loc);
+        }
         return dtos;
     }
 }

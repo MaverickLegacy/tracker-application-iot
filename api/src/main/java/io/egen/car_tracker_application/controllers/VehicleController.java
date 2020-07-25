@@ -4,6 +4,8 @@ import com.sun.istack.NotNull;
 import io.egen.car_tracker_application.domain.Alert;
 import io.egen.car_tracker_application.domain.Vehicle;
 import io.egen.car_tracker_application.domain.VehicleReading;
+import io.egen.car_tracker_application.dto.AlertsDto;
+import io.egen.car_tracker_application.dto.GeolocationDto;
 import io.egen.car_tracker_application.dto.ReadingsEntityToDto;
 import io.egen.car_tracker_application.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +49,12 @@ public class VehicleController {
         this.vehicleService.addVehicleReading(vehicleReading);
     }
 
-/*
 
     @GetMapping("/alerts/{id}")
-    public List<Alert> getAllHistoricalAlerts(@PathVariable("id") String vin){
-        return this.vehicleService.findAllHistoricalAlerts(vin);
+    public Iterable<AlertsDto> getAllHistoricalAlerts(@PathVariable("id") String vin){
+        return this.vehicleService.getAlertsByVehicleId(vin);
     }
 
-*/
     @GetMapping("/allalerts/")
     public Iterable<Alert> getAlerts(){
         return this.vehicleService.getAlerts();
@@ -63,5 +63,10 @@ public class VehicleController {
     @GetMapping("/givereadings")
     public Iterable<ReadingsEntityToDto> getReadings(){
         return vehicleService.getReadings();
+    }
+
+    @GetMapping("/getGeolocation/{id}")
+    public Iterable<GeolocationDto> getLocations(@PathVariable("id") String vehicleId){
+        return this.vehicleService.getLocationByVehicleIdAndTimestamp(vehicleId);
     }
 }

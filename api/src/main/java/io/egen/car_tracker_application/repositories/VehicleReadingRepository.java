@@ -4,10 +4,8 @@ import io.egen.car_tracker_application.domain.ReadingId;
 import io.egen.car_tracker_application.domain.VehicleReading;
 import org.springframework.data.repository.CrudRepository;
 
+import java.time.LocalDateTime;
+
 public interface VehicleReadingRepository extends CrudRepository<VehicleReading, ReadingId> {
-//    @Query("SELECT v.latitude FROM VehicleReading")
-//    List<VehicleReading> findByMyQuery();
-/*
-    @Query("SELECT v.latitude FROM VehicleReading v")
-    ArrayList<Float> findAllSomeMethod();*/
+ public Iterable<VehicleReading> getVehicleReadingsByReadingId_VehicleIdAndReadingId_TimestampBetween(String vehicleId, LocalDateTime t1, LocalDateTime t2);
 }
